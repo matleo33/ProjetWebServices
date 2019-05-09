@@ -7,5 +7,6 @@
   <servlet-mapping>
     <servlet-name>Garage</servlet-name>
     <url-pattern>/home</url-pattern>
+    <url-pattern>/accessStock</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -4,4 +4,5 @@
 <li>Achat piece</li>
 <li>Achat voiture</li>
 <li>Contact</li>
+<li><a href="accessStock">Gestion stocks</a></li>
 </ul>
