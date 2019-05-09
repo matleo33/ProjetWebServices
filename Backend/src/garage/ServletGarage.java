@@ -1,4 +1,4 @@
-package Garage;
+package garage;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/ServletGarage")
 public class ServletGarage extends HttpServlet {
 	private HashMap<String, String> m_pages;
+	private GarageManager m_gm;
 	
 	private static final long serialVersionUID = 1L;
 
@@ -43,6 +44,7 @@ public class ServletGarage extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String page = matchURL(request.getRequestURL());
+		this.getServletContext().setAttribute("garageManager", m_gm);
 		this.getServletContext().getRequestDispatcher(page).forward(request, response);
 	}
 
