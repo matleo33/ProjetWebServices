@@ -44,7 +44,6 @@ public class ServletGarage extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String page = matchURL(request.getRequestURL());
-		this.getServletContext().setAttribute("garageManager", m_gm);
 		this.getServletContext().getRequestDispatcher(page).forward(request, response);
 	}
 
