@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.annotation.WebServlet;
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -16,12 +20,14 @@ import org.jdom2.output.XMLOutputter;
 
 import garage.User.Grade;
 
+@WebService
 public class GarageManager {
 	private ArrayList<Vehicle> m_vehicle;
 	private ArrayList<CarPart> m_carParts;
+	private ArrayList<Service> m_services;
 	private ArrayList<User> m_users;
 	private boolean m_connected;
-	private final String m_bddLocation;
+	private String m_bddLocation;
 	
 	public GarageManager() {
 		m_connected = false;
@@ -102,14 +108,17 @@ public class GarageManager {
 		}
 	}
 	
-	public void addCarPart(CarPart c) {
+	@WebMethod
+	public boolean addCarPart(CarPart c) {
 		if (m_carParts.contains(c)) {
 			m_carParts.get(m_carParts.indexOf(c)).addOne();
 		} else {
 			m_carParts.add(c);
 		}
+		return true;
 	}
 	
+	/*@WebMethod
 	public void addCarPart(String name, Vehicle v, int quantity, int price) {
 		CarPart c = new CarPart(name, v, quantity, price);
 		if (m_carParts.contains(c)) {
@@ -117,17 +126,21 @@ public class GarageManager {
 		} else {
 			m_carParts.add(c);
 		}
-	}
+	}*/
 	
-	public void addVehicle(Vehicle v) {
+	@WebMethod
+	public boolean addVehicle(Vehicle v) {
 		m_vehicle.add(v);
+		return true;
 	}
 	
+	/*@WebMethod
 	public void addVehicle(String brand, String model, int price) {
 		Vehicle v = new Vehicle(brand, model, price);
 		m_vehicle.add(v);
-	}
+	}*/
 	
+	@WebMethod
 	public boolean connect(String username, String password) {
 		for (User u : m_users) {
 			if (u.connect(username, password)) {
@@ -138,6 +151,7 @@ public class GarageManager {
 		return false;
 	}
 	
+	@WebMethod
 	public boolean register(String username, String password, Grade g) {
 		for (User u : m_users) {
 			if (u.connect(username, password)) {
@@ -148,4 +162,34 @@ public class GarageManager {
 		m_users.add(u);
 		return true;
 	}
+	
+	@WebMethod
+	public boolean sellVehicle(Vehicle v) {
+		if (m_vehicle.contains(v)) {
+			m_vehicle.remove(v);
+			return true;
+		}
+		return false;
+	}
+	
+	@WebMethod
+	public boolean sellCarPart(CarPart c) {
+		if (m_carParts.contains(c)) {
+			m_carParts.remove(c);
+			return true;
+		}
+		return false;
+	}
+	
+	@WebMethod
+	public boolean addService(Service s) {
+		m_services.add(s);
+		return true;
+	}
+	
+	/*public boolean addService(String name, int price) {
+		Service s = new Service(name, price);
+		m_services.add(s);
+		return true;
+	}*/
 }

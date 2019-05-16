@@ -13,6 +13,10 @@ public class CarPart {
 		m_price = price;
 	}
 	
+	public CarPart() {
+		
+	}
+	
 	public void setName(String newName) {
 		m_name = newName;
 	}

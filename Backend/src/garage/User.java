@@ -17,6 +17,10 @@ public class User {
 		m_id = m_lastId;
 	}
 	
+	public User() {
+		
+	}
+	
 	public void setPassword(String newPassword) {
 		m_password = newPassword;
 	}

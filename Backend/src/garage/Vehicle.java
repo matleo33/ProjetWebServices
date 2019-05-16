@@ -11,6 +11,10 @@ public class Vehicle {
 		m_price = price;
 	}
 	
+	public Vehicle() {
+		
+	}
+	
 	public void setBrand(String newBrand) {
 		m_brand = newBrand;
 	}
