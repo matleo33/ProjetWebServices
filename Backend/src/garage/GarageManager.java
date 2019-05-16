@@ -37,6 +37,11 @@ public class GarageManager {
 	private String m_bddLocation;
 	
 	public GarageManager() {
+		m_vehicles = new Vehicle[Integer.MAX_VALUE];
+		m_carParts = new CarPart[Integer.MAX_VALUE];
+		m_services = new Service[Integer.MAX_VALUE];
+		m_users = new User[Integer.MAX_VALUE];
+		
 		m_nbCarParts = 0;
 		m_nbServices = 0;
 		m_nbUsers = 0;
