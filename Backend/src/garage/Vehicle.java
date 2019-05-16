@@ -4,11 +4,13 @@ public class Vehicle {
 	private String m_brand;
 	private String m_model;
 	private int m_price;
+	int m_kilometers;
 	
-	public Vehicle(String brand, String model, int price) {
+	public Vehicle(String brand, String model, int price, int kilometers) {
 		m_brand = brand;
 		m_model = model;
 		m_price = price;
+		m_kilometers = kilometers;
 	}
 	
 	public Vehicle() {
@@ -43,5 +45,13 @@ public class Vehicle {
 		String tmp="";
 		tmp += m_brand + ", " + m_model;
 		return tmp;
+	}
+	
+	public int getKilometers() {
+		return m_kilometers;
+	}
+	
+	public void setKilometers(int newKilometers) {
+		m_kilometers = newKilometers;
 	}
 }

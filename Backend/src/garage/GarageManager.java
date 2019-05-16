@@ -81,7 +81,8 @@ public class GarageManager {
 			Element tmp = (Element)i.next();
 			Vehicle v = new Vehicle(tmp.getChild("brand").getText(),
 									tmp.getChild("model").getText(),
-									Integer.parseInt(tmp.getChild("price").getText()));
+									Integer.parseInt(tmp.getChild("price").getText()),
+									Integer.parseInt(tmp.getChild("kilometers").getText()));
 			addVehicle(v);
 		}
 		
@@ -90,7 +91,8 @@ public class GarageManager {
 			Element tmp = (Element)i2.next();
 			Vehicle v = new Vehicle(tmp.getChild("brand").getText(),
 									tmp.getChild("model").getText(),
-									Integer.parseInt(tmp.getChild("priceV").getText()));
+									Integer.parseInt(tmp.getChild("priceV").getText()),
+									Integer.parseInt(tmp.getChild("kilometers").getText()));
 			CarPart c = new CarPart(tmp.getChild("name").getText(),
 									v,
 									Integer.parseInt(tmp.getChild("quantity").getText()),
