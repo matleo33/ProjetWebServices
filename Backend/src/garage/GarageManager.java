@@ -26,11 +26,9 @@ public class GarageManager {
 	private ArrayList<CarPart> m_carParts;
 	private ArrayList<Service> m_services;
 	private ArrayList<User> m_users;
-	private boolean m_connected;
 	private String m_bddLocation;
 	
 	public GarageManager() {
-		m_connected = false;
 		m_bddLocation = "/WEB-INF/bdd.xml";
 		try {
 			this.load();
@@ -144,7 +142,6 @@ public class GarageManager {
 	public boolean connect(String username, String password) {
 		for (User u : m_users) {
 			if (u.connect(username, password)) {
-				m_connected = true;
 				return true;
 			}
 		}
