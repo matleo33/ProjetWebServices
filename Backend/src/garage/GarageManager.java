@@ -73,6 +73,7 @@ public class GarageManager {
 		List vehicles = root.getChild("vehicles").getChildren("vehicle");
 		List carParts = root.getChild("carParts").getChildren("carPart");
 		List users = root.getChild("users").getChildren("user");
+		List services = root.getChild("services").getChildren("service");
 		
 		//Add cars as data
 		Iterator i = vehicles.iterator();
@@ -103,6 +104,14 @@ public class GarageManager {
 			register(tmp.getChild("username").getText(),
 					  tmp.getChild("password").getText(),
 					  Grade.valueOf(tmp.getChild("grade").getText()));
+		}
+		
+		Iterator i4 = services.iterator();
+		while (i4.hasNext()) {
+			Element tmp = (Element)i4.next();
+			Service s = new Service(tmp.getChild("name").getText(),
+									Integer.parseInt(tmp.getChild("price").getText()));
+			addService(s);
 		}
 	}
 	
