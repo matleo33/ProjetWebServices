@@ -22,13 +22,25 @@ import garage.User.Grade;
 
 @WebService
 public class GarageManager {
-	private ArrayList<Vehicle> m_vehicle;
-	private ArrayList<CarPart> m_carParts;
-	private ArrayList<Service> m_services;
-	private ArrayList<User> m_users;
+	private Vehicle[] m_vehicles;
+	private int m_nbVehicles;
+	
+	private CarPart[] m_carParts;
+	private int m_nbCarParts;
+	
+	private Service[] m_services;
+	private int m_nbServices; 
+	
+	private User[] m_users;
+	private int m_nbUsers;
+	
 	private String m_bddLocation;
 	
 	public GarageManager() {
+		m_nbCarParts = 0;
+		m_nbServices = 0;
+		m_nbUsers = 0;
+		m_nbVehicles = 0;
 		m_bddLocation = "/WEB-INF/bdd.xml";
 		try {
 			this.load();
@@ -119,11 +131,19 @@ public class GarageManager {
 	
 	@WebMethod
 	public boolean addCarPart(CarPart c) {
-		if (m_carParts.contains(c)) {
+		/*if (m_carParts.contains(c)) {
 			m_carParts.get(m_carParts.indexOf(c)).addOne();
 		} else {
 			m_carParts.add(c);
+		}*/
+		for (int i = 0 ; i <= m_nbCarParts ; ++i) {
+			if (m_carParts[i] == c) {
+				m_carParts[i].addOne();
+				return true;
+			}
 		}
+		m_carParts[m_nbCarParts] = c;
+		m_nbCarParts++;
 		return true;
 	}
 	
@@ -139,7 +159,8 @@ public class GarageManager {
 	
 	@WebMethod
 	public boolean addVehicle(Vehicle v) {
-		m_vehicle.add(v);
+		m_vehicles[m_nbVehicles] = v;
+		m_nbVehicles++;
 		return true;
 	}
 	
@@ -151,8 +172,8 @@ public class GarageManager {
 	
 	@WebMethod
 	public boolean connect(String username, String password) {
-		for (User u : m_users) {
-			if (u.connect(username, password)) {
+		for (int i = 0 ; i < m_nbUsers ; ++i) {
+			if (m_users[i].connect(username, password)) {
 				return true;
 			}
 		}
@@ -161,37 +182,51 @@ public class GarageManager {
 	
 	@WebMethod
 	public boolean register(String username, String password, Grade g) {
-		for (User u : m_users) {
-			if (u.connect(username, password)) {
+		for (int i = 0 ; i < m_nbUsers ; ++i) {
+			if (m_users[i].connect(username, password)) {
 				return false;
 			}
 		}
 		User u = new User(username, password, g);
-		m_users.add(u);
+		m_users[m_nbUsers] = u;
+		m_nbUsers++;
 		return true;
 	}
 	
 	@WebMethod
 	public boolean sellVehicle(Vehicle v) {
-		if (m_vehicle.contains(v)) {
-			m_vehicle.remove(v);
-			return true;
+		for (int i = 0 ; i < m_nbVehicles ; ++i) {
+			if (m_vehicles[i] == v) {
+				for (int j = i ; j < m_nbVehicles-1 ; ++j) {
+					m_vehicles[j] = m_vehicles[j+1];
+				}
+				m_nbVehicles--;
+				return true;
+			}
 		}
 		return false;
 	}
 	
 	@WebMethod
 	public boolean sellCarPart(CarPart c) {
-		if (m_carParts.contains(c)) {
-			m_carParts.remove(c);
-			return true;
+		for (int i = 0 ; i < m_nbCarParts ; ++i) {
+			if (m_carParts[i] == c) {
+				if (m_carParts[i].removeOne()) {
+					for (int j = i ; j < m_nbCarParts-1 ; ++j) {
+						m_carParts[j] = m_carParts[j+1];
+					}
+					m_nbCarParts--;
+				}
+				return true;
+			}
 		}
 		return false;
 	}
 	
 	@WebMethod
 	public boolean addService(Service s) {
-		m_services.add(s);
+		m_services[m_nbServices]=s;
+		m_nbServices++;
 		return true;
 	}
 	

@@ -28,4 +28,6 @@ public class Service {
 	public void setPrice(int newPrice) {
 		m_price = newPrice;
 	}
+	
+	
 }

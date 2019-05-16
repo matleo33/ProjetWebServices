@@ -59,4 +59,21 @@ public class CarPart {
 		tmp += "There are " + m_quantity + " left";
 		return tmp;
 	}
+	
+	public boolean removeOne() {
+		m_quantity--;
+		return (m_quantity==0);
+	}
+	
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof CarPart)) {
+			return false;
+		}
+		
+		CarPart c = (CarPart) obj;
+		return (this.m_name == c.getName() && this.m_price == c.getPrice() && this.m_vehicle == c.getVehicle());
+	}
 }

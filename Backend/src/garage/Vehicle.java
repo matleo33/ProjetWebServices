@@ -54,4 +54,16 @@ public class Vehicle {
 	public void setKilometers(int newKilometers) {
 		m_kilometers = newKilometers;
 	}
+	
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Vehicle)) {
+			return false;
+		}
+		
+		Vehicle v = (Vehicle) obj;
+		return (this.m_brand == v.getBrand() && this.m_model == v.getModel() && this.m_price == v.getPrice() && this.m_kilometers == v.getKilometers());
+	}
 }

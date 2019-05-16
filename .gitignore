@@ -1,6 +1,6 @@
 *
 !.gitignore
-!Backend/src
+!Backend/src/*
 !Backend/WebContent/*
 !Frontend/WebContent/*
-!Frontend/src
+!Frontend/src/*
