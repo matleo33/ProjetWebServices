@@ -3,6 +3,7 @@ package garage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,34 +17,21 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
-import garage.User.Grade;
-
 @WebService
 public class GarageManager {
-	private Vehicle[] m_vehicles;
-	private int m_nbVehicles;
-	
-	private CarPart[] m_carParts;
-	private int m_nbCarParts;
-	
-	private Service[] m_services;
-	private int m_nbServices; 
-	
-	private User[] m_users;
-	private int m_nbUsers;
+	private ArrayList<Vehicle> m_vehicles;
+	private ArrayList<CarPart> m_carParts;
+	private ArrayList<Service> m_services;
+	private ArrayList<User> m_users;
 	
 	private String m_bddLocation;
 	
 	public GarageManager() {
-		m_vehicles = new Vehicle[Integer.MAX_VALUE];
-		m_carParts = new CarPart[Integer.MAX_VALUE];
-		m_services = new Service[Integer.MAX_VALUE];
-		m_users = new User[Integer.MAX_VALUE];
+		m_vehicles = new ArrayList<Vehicle>();
+		m_carParts = new ArrayList<CarPart>();
+		m_services = new ArrayList<Service>();
+		m_users = new ArrayList<User>();
 		
-		m_nbCarParts = 0;
-		m_nbServices = 0;
-		m_nbUsers = 0;
-		m_nbVehicles = 0;
 		m_bddLocation = "/WEB-INF/bdd.xml";
 		try {
 			this.load();
@@ -119,8 +107,7 @@ public class GarageManager {
 		while (i3.hasNext()) {
 			Element tmp = (Element)i3.next();
 			register(tmp.getChild("username").getText(),
-					  tmp.getChild("password").getText(),
-					  Grade.valueOf(tmp.getChild("grade").getText()));
+					  tmp.getChild("password").getText());
 		}
 		
 		Iterator i4 = services.iterator();
@@ -134,19 +121,11 @@ public class GarageManager {
 	
 	@WebMethod
 	public boolean addCarPart(CarPart c) {
-		/*if (m_carParts.contains(c)) {
+		if (m_carParts.contains(c)) {
 			m_carParts.get(m_carParts.indexOf(c)).addOne();
 		} else {
 			m_carParts.add(c);
-		}*/
-		for (int i = 0 ; i <= m_nbCarParts ; ++i) {
-			if (m_carParts[i] == c) {
-				m_carParts[i].addOne();
-				return true;
-			}
 		}
-		m_carParts[m_nbCarParts] = c;
-		m_nbCarParts++;
 		return true;
 	}
 	
@@ -162,8 +141,7 @@ public class GarageManager {
 	
 	@WebMethod
 	public boolean addVehicle(Vehicle v) {
-		m_vehicles[m_nbVehicles] = v;
-		m_nbVehicles++;
+		m_vehicles.add(v);
 		return true;
 	}
 	
@@ -175,8 +153,8 @@ public class GarageManager {
 	
 	@WebMethod
 	public boolean connect(String username, String password) {
-		for (int i = 0 ; i < m_nbUsers ; ++i) {
-			if (m_users[i].connect(username, password)) {
+		for (User u : m_users) {
+			if (u.connect(username, password)) {
 				return true;
 			}
 		}
@@ -184,52 +162,37 @@ public class GarageManager {
 	}
 	
 	@WebMethod
-	public boolean register(String username, String password, Grade g) {
-		for (int i = 0 ; i < m_nbUsers ; ++i) {
-			if (m_users[i].connect(username, password)) {
+	public boolean register(String username, String password) {
+		for (User u : m_users) {
+			if (u.connect(username, password)) {
 				return false;
 			}
 		}
-		User u = new User(username, password, g);
-		m_users[m_nbUsers] = u;
-		m_nbUsers++;
+		User u = new User(username, password);
+		m_users.add(u);
 		return true;
 	}
 	
 	@WebMethod
 	public boolean sellVehicle(Vehicle v) {
-		for (int i = 0 ; i < m_nbVehicles ; ++i) {
-			if (m_vehicles[i] == v) {
-				for (int j = i ; j < m_nbVehicles-1 ; ++j) {
-					m_vehicles[j] = m_vehicles[j+1];
-				}
-				m_nbVehicles--;
-				return true;
-			}
+		if (m_vehicles.contains(v)) {
+			m_vehicles.remove(v);
 		}
 		return false;
 	}
 	
 	@WebMethod
 	public boolean sellCarPart(CarPart c) {
-		for (int i = 0 ; i < m_nbCarParts ; ++i) {
-			if (m_carParts[i] == c) {
-				if (m_carParts[i].removeOne()) {
-					for (int j = i ; j < m_nbCarParts-1 ; ++j) {
-						m_carParts[j] = m_carParts[j+1];
-					}
-					m_nbCarParts--;
-				}
-				return true;
-			}
+		if (m_carParts.contains(c)) {
+			c.removeOne();
+			return true;
 		}
 		return false;
 	}
 	
 	@WebMethod
 	public boolean addService(Service s) {
-		m_services[m_nbServices]=s;
-		m_nbServices++;
+		m_services.add(s);
 		return true;
 	}
 	

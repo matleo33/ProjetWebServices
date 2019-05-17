@@ -1,18 +1,15 @@
 package garage;
 
 public class User {
-	public enum Grade{Admin, Customer, Provider};
 	
 	private static int m_lastId=0;
 	private int m_id;
 	private String m_username;
 	private String m_password;
-	private Grade m_grade;
 	
-	public User(String username, String password, Grade grade) {
+	public User(String username, String password) {
 		m_username = username;
 		m_password = password;
-		m_grade = grade;
 		++m_lastId;
 		m_id = m_lastId;
 	}
