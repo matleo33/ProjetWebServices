@@ -46,6 +46,7 @@ public class ServletGarage extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String page = matchURL(request.getRequestURL());
 		request.setAttribute("vehicleList", m_gm.getVehicles());
+		request.setAttribute("carPartList", m_gm.getCarParts());
 		request.setAttribute("gm", m_gm);
 		this.getServletContext().getRequestDispatcher(page).forward(request, response);
 	}
@@ -63,6 +64,16 @@ public class ServletGarage extends HttpServlet {
 						Integer.parseInt(request.getParameter("price")),
 						Integer.parseInt(request.getParameter("kilometers")));
 				m_gm.addVehicle(v);
+			}
+		} else if (this.matchURL(request.getRequestURL()) == "/WEB-INF/accessStock.jsp") {
+			if (request.getParameter("name") != "" && 
+				Integer.parseInt(request.getParameter("price")) >=0 && 
+				Integer.parseInt(request.getParameter("quantity")) >= 0) {
+					/*CarPart c = new CarPart(request.getParameter("name"),
+							vehicle,
+							Integer.parseInt(request.getParameter("price")),
+							Integer.parseInt(request.getParameter("quantity")) >= 0);*/
+					//m_gm.addCarPart(c);
 			}
 		}
 		doGet(request, response);
