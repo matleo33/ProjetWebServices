@@ -197,6 +197,7 @@ public class GarageManager {
 			}
 			case 3 : {
 				Provider p = new Provider(username, password);
+				m_users.add(p);
 				break;
 			}
 		}
