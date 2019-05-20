@@ -1,16 +1,12 @@
 package garage;
 
 public class Vehicle {
-	private String m_brand;
-	private String m_model;
-	private int m_price;
-	int m_kilometers;
+	protected String m_brand;
+	protected String m_model;
 	
-	public Vehicle(String brand, String model, int price, int kilometers) {
+	public Vehicle(String brand, String model) {
 		m_brand = brand;
 		m_model = model;
-		m_price = price;
-		m_kilometers = kilometers;
 	}
 	
 	public Vehicle() {
@@ -33,26 +29,11 @@ public class Vehicle {
 		return m_model;
 	}
 	
-	public void setPrice(int newPrice) {
-		m_price = newPrice;
-	}
-	
-	public int getPrice() {
-		return m_price;
-	}
 	
 	public String toString () {
 		String tmp="";
 		tmp += m_brand + ", " + m_model;
 		return tmp;
-	}
-	
-	public int getKilometers() {
-		return m_kilometers;
-	}
-	
-	public void setKilometers(int newKilometers) {
-		m_kilometers = newKilometers;
 	}
 	
 	public boolean equals(Object obj) {
@@ -64,6 +45,6 @@ public class Vehicle {
 		}
 		
 		Vehicle v = (Vehicle) obj;
-		return (this.m_brand == v.getBrand() && this.m_model == v.getModel() && this.m_price == v.getPrice() && this.m_kilometers == v.getKilometers());
+		return (this.m_brand == v.getBrand() && this.m_model == v.getModel());
 	}
 }

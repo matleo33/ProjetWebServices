@@ -17,14 +17,8 @@
       <void property="brand">
        <string>Citroën</string>
       </void>
-      <void property="kilometers">
-       <int>60000</int>
-      </void>
       <void property="model">
        <string>C3</string>
-      </void>
-      <void property="price">
-       <int>6000</int>
       </void>
      </object>
     </void>
@@ -46,14 +40,8 @@
       <void property="brand">
        <string>Citroën</string>
       </void>
-      <void property="kilometers">
-       <int>60000</int>
-      </void>
       <void property="model">
        <string>C3</string>
-      </void>
-      <void property="price">
-       <int>6000</int>
       </void>
      </object>
     </void>

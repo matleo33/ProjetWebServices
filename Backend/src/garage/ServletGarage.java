@@ -1,7 +1,6 @@
 package garage;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 
 import javax.servlet.ServletException;
@@ -47,6 +46,7 @@ public class ServletGarage extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String page = matchURL(request.getRequestURL());
 		request.setAttribute("vehicleList", m_gm.getVehicles());
+		request.setAttribute("gm", m_gm);
 		this.getServletContext().getRequestDispatcher(page).forward(request, response);
 	}
 
@@ -54,6 +54,17 @@ public class ServletGarage extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if (this.matchURL(request.getRequestURL()) == "/WEB-INF/vehicles.jsp") {
+			if(request.getParameter("brand") != "" && request.getParameter("model") != "" 
+					&& Integer.parseInt(request.getParameter("kilometers"))>=0 &&
+					Integer.parseInt(request.getParameter("price")) >=0 ) {
+				VehicleOnSale v = new VehicleOnSale(request.getParameter("brand"),
+						request.getParameter("model"),
+						Integer.parseInt(request.getParameter("price")),
+						Integer.parseInt(request.getParameter("kilometers")));
+				m_gm.addVehicle(v);
+			}
+		}
 		doGet(request, response);
 	}
 

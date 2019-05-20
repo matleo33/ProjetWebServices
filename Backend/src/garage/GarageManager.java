@@ -4,21 +4,16 @@ import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
 @WebService
 public class GarageManager {
-	private ArrayList<Vehicle> m_vehicles;
+	private ArrayList<VehicleOnSale> m_vehicles;
 	private ArrayList<CarPart> m_carParts;
 	private ArrayList<Service> m_services;
 	private ArrayList<User> m_users;
@@ -30,7 +25,7 @@ public class GarageManager {
 	
 	
 	public GarageManager() {
-		m_vehicles = new ArrayList<Vehicle>();
+		m_vehicles = new ArrayList<VehicleOnSale>();
 		m_carParts = new ArrayList<CarPart>();
 		m_services = new ArrayList<Service>();
 		m_users = new ArrayList<User>();
@@ -96,7 +91,7 @@ public class GarageManager {
 			e.printStackTrace();
 		}
 		try {
-			m_vehicles = (ArrayList<Vehicle>)decoder.readObject();
+			m_vehicles = (ArrayList<VehicleOnSale>)decoder.readObject();
 		} catch (NullPointerException e) {
 			
 		}
@@ -160,7 +155,7 @@ public class GarageManager {
 	}*/
 	
 	@WebMethod
-	public boolean addVehicle(Vehicle v) {
+	public boolean addVehicle(VehicleOnSale v) {
 		m_vehicles.add(v);
 		saveVehicles();
 		return true;
@@ -211,6 +206,8 @@ public class GarageManager {
 	
 	@WebMethod
 	public boolean sellVehicle(Vehicle v) {
+		System.out.println("SOLD");
+		System.out.println(v);
 		if (m_vehicles.contains(v)) {
 			m_vehicles.remove(v);
 			saveVehicles();
@@ -237,7 +234,7 @@ public class GarageManager {
 	}
 	
 	@WebMethod
-	public ArrayList<Vehicle> getVehicles() {
+	public ArrayList<VehicleOnSale> getVehicles() {
 		return m_vehicles;
 	}
 	

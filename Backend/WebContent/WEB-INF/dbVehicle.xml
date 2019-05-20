@@ -2,18 +2,18 @@
 <java version="11.0.3" class="java.beans.XMLDecoder">
  <object class="java.util.ArrayList">
   <void method="add">
-   <object class="garage.Vehicle">
+   <object class="garage.VehicleOnSale">
     <void property="brand">
-     <string>Citroën</string>
+     <string>Lamborghini</string>
     </void>
     <void property="kilometers">
-     <int>60000</int>
+     <int>5</int>
     </void>
     <void property="model">
-     <string>C3</string>
+     <string>Aventador</string>
     </void>
     <void property="price">
-     <int>6000</int>
+     <int>10000000</int>
     </void>
    </object>
   </void>
