@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="11.0.3" class="java.beans.XMLDecoder">
+ <object class="java.util.ArrayList">
+  <void method="add">
+   <object class="garage.Service">
+    <void property="name">
+     <string>Oil change</string>
+    </void>
+    <void property="price">
+     <int>100</int>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="garage.Service">
+    <void property="name">
+     <string>Oil change</string>
+    </void>
+    <void property="price">
+     <int>100</int>
+    </void>
+   </object>
+  </void>
+ </object>
+</java>

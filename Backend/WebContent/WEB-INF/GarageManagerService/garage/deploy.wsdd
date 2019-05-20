@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from GarageManagerService WSDL service -->
+
+  <service name="GarageManager" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://garage"/>
+      <parameter name="wsdlServiceElement" value="GarageManagerService"/>
+      <parameter name="schemaQualified" value="http://garage"/>
+      <parameter name="wsdlServicePort" value="GarageManager"/>
+      <parameter name="className" value="garage.GarageManager"/>
+      <parameter name="wsdlPortType" value="GarageManager"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://garage" xmlns:retNS="http://garage" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="register" qname="operNS:register" returnQName="retNS:registerReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://garage" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:username" type="tns:string"/>
+        <parameter xmlns:pns="http://garage" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:password" type="tns:string"/>
+        <parameter xmlns:pns="http://garage" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:g" type="tns:anyType"/>
+      </operation>
+      <operation xmlns:operNS="http://garage" xmlns:retNS="http://garage" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="connect" qname="operNS:connect" returnQName="retNS:connectReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://garage" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:username" type="tns:string"/>
+        <parameter xmlns:pns="http://garage" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:password" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://garage" name="addVehicle" qname="operNS:addVehicle" soapAction="">
+        <parameter xmlns:pns="http://garage" xmlns:tns="http://garage" qname="pns:v" type="tns:Vehicle"/>
+      </operation>
+      <operation xmlns:operNS="http://garage" name="addCarPart" qname="operNS:addCarPart" soapAction="">
+        <parameter xmlns:pns="http://garage" xmlns:tns="http://garage" qname="pns:c" type="tns:CarPart"/>
+      </operation>
+      <operation xmlns:operNS="http://garage" xmlns:retNS="http://garage" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="sellVehicle" qname="operNS:sellVehicle" returnQName="retNS:sellVehicleReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://garage" xmlns:tns="http://garage" qname="pns:v" type="tns:Vehicle"/>
+      </operation>
+      <operation xmlns:operNS="http://garage" xmlns:retNS="http://garage" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="sellCarPart" qname="operNS:sellCarPart" returnQName="retNS:sellCarPartReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://garage" xmlns:tns="http://garage" qname="pns:c" type="tns:CarPart"/>
+      </operation>
+      <parameter name="allowedMethods" value="sellCarPart sellVehicle addVehicle connect addCarPart register"/>
+
+      <typeMapping xmlns:ns="http://garage" qname="ns:&gt;connect" type="java:garage.Connect" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://garage" qname="ns:Vehicle" type="java:garage.Vehicle" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://garage" qname="ns:&gt;registerResponse" type="java:garage.RegisterResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://garage" qname="ns:CarPart" type="java:garage.CarPart" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://garage" qname="ns:&gt;sellVehicleResponse" type="java:garage.SellVehicleResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://garage" qname="ns:&gt;sellCarPart" type="java:garage.SellCarPart" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://garage" qname="ns:&gt;addCarPart" type="java:garage.AddCarPart" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://garage" qname="ns:&gt;addVehicleResponse" type="java:garage.AddVehicleResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://garage" qname="ns:&gt;connectResponse" type="java:garage.ConnectResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://garage" qname="ns:&gt;addCarPartResponse" type="java:garage.AddCarPartResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://garage" qname="ns:&gt;sellCarPartResponse" type="java:garage.SellCarPartResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://garage" qname="ns:&gt;sellVehicle" type="java:garage.SellVehicle" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://garage" qname="ns:&gt;addVehicle" type="java:garage.AddVehicle" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+  </service>
+</deployment>
