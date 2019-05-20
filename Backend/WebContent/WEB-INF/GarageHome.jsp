@@ -9,6 +9,6 @@
 </head>
 <body>
 <%@ include file="menu.jsp" %>
-	<h1>Bonjour et bienvenue dans le garage des bg's</h1> 
+	<h1>Hi and welcome to the Beautiful People garage</h1> 
 </body>
 </html>

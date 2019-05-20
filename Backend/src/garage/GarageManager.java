@@ -1,6 +1,12 @@
 package garage;
 
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,13 +16,6 @@ import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
-
 @WebService
 public class GarageManager {
 	private ArrayList<Vehicle> m_vehicles;
@@ -24,7 +23,11 @@ public class GarageManager {
 	private ArrayList<Service> m_services;
 	private ArrayList<User> m_users;
 	
-	private String m_bddLocation;
+	private String m_dbVehicleLocation;
+	private String m_dbCarPartsLocation;
+	private String m_dbServicesLocation;
+	private String m_dbUsersLocation;
+	
 	
 	public GarageManager() {
 		m_vehicles = new ArrayList<Vehicle>();
@@ -32,90 +35,106 @@ public class GarageManager {
 		m_services = new ArrayList<Service>();
 		m_users = new ArrayList<User>();
 		
-		m_bddLocation = "/WEB-INF/bdd.xml";
+		m_dbVehicleLocation = "/home/mathieu/MIAGE/M1MIAGE/S8/webservice/projet/ProjetWebServices/Backend/WebContent/WEB-INF/dbVehicle.xml";
+		m_dbCarPartsLocation = "/home/mathieu/MIAGE/M1MIAGE/S8/webservice/projet/ProjetWebServices/Backend/WebContent/WEB-INF/dbCarParts.xml";
+		m_dbServicesLocation = "/home/mathieu/MIAGE/M1MIAGE/S8/webservice/projet/ProjetWebServices/Backend/WebContent/WEB-INF/dbServices.xml";
+		m_dbUsersLocation = "/home/mathieu/MIAGE/M1MIAGE/S8/webservice/projet/ProjetWebServices/Backend/WebContent/WEB-INF/dbUsers.xml";
+		
+		this.load();
+	}
+	
+	private void saveVehicles() {
+		XMLEncoder encoder = null;
 		try {
-			this.load();
-		} catch (JDOMException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+			encoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(m_dbVehicleLocation)));
+		} catch (FileNotFoundException fileNotFound){
+			System.out.println("NO FILE HERE");
 		}
+		encoder.writeObject(m_vehicles);
+		encoder.close();
 	}
 	
-	private void save() {
-		Element root = new Element("garage");
-		Document document = new Document(root);
-		
-		//Save the Vehicles
-		//TODO
-		
-		//Save the car parts
-		//TODO
-		
-		//Save the Users
-		//TODO
-		
-		
-		 try
-		   {
-		      XMLOutputter output = new XMLOutputter(Format.getPrettyFormat());
-		      output.output(document, new FileOutputStream(m_bddLocation));
-		   }
-		   catch (java.io.IOException e){}
+	private void saveCarParts() {
+		XMLEncoder encoder = null;
+		try {
+			encoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(m_dbCarPartsLocation)));
+		} catch (FileNotFoundException fileNotFound){
+			System.out.println("NO FILE HERE");
+		}
+		encoder.writeObject(m_carParts);
+		encoder.close();
 	}
 	
-	private void load() throws JDOMException, IOException {
-		Element root = new Element("garage");
-		Document document = new Document(root);
-		SAXBuilder sxb = new SAXBuilder();
-		document = sxb.build(new File(m_bddLocation));
-		
-		root = document.getRootElement();
-		
-		//Get all the elements in XML
-		List vehicles = root.getChild("vehicles").getChildren("vehicle");
-		List carParts = root.getChild("carParts").getChildren("carPart");
-		List users = root.getChild("users").getChildren("user");
-		List services = root.getChild("services").getChildren("service");
-		
-		//Add cars as data
-		Iterator i = vehicles.iterator();
-		while (i.hasNext()) {
-			Element tmp = (Element)i.next();
-			Vehicle v = new Vehicle(tmp.getChild("brand").getText(),
-									tmp.getChild("model").getText(),
-									Integer.parseInt(tmp.getChild("price").getText()),
-									Integer.parseInt(tmp.getChild("kilometers").getText()));
-			addVehicle(v);
+	private void saveServices() {
+		XMLEncoder encoder = null;
+		try {
+			encoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(m_dbServicesLocation)));
+		} catch (FileNotFoundException fileNotFound){
+			System.out.println("NO FILE HERE");
+		}
+		encoder.writeObject(m_services);
+		encoder.close();
+	}
+	
+	private void saveUsers() {
+		XMLEncoder encoder = null;
+		try {
+			encoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(m_dbUsersLocation)));
+		} catch (FileNotFoundException fileNotFound){
+			System.out.println("NO FILE HERE");
+		}
+		encoder.writeObject(m_users);
+		encoder.close();
+	}
+	
+	private void load() {
+		//Vehicle
+		XMLDecoder decoder = null;
+		try {
+			decoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(m_dbVehicleLocation)));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
+			m_vehicles = (ArrayList<Vehicle>)decoder.readObject();
+		} catch (NullPointerException e) {
+			
 		}
 		
-		Iterator i2 = carParts.iterator();
-		while (i2.hasNext()) {
-			Element tmp = (Element)i2.next();
-			Vehicle v = new Vehicle(tmp.getChild("brand").getText(),
-									tmp.getChild("model").getText(),
-									Integer.parseInt(tmp.getChild("priceV").getText()),
-									Integer.parseInt(tmp.getChild("kilometers").getText()));
-			CarPart c = new CarPart(tmp.getChild("name").getText(),
-									v,
-									Integer.parseInt(tmp.getChild("quantity").getText()),
-									Integer.parseInt(tmp.getChild("price").getText()));
-			addCarPart(c);
+		//Service
+		try {
+			decoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(m_dbServicesLocation)));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
+			m_services = (ArrayList<Service>)decoder.readObject();
+		} catch (NullPointerException e) {
+			
 		}
 		
-		Iterator i3 = users.iterator();
-		while (i3.hasNext()) {
-			Element tmp = (Element)i3.next();
-			register(tmp.getChild("username").getText(),
-					  tmp.getChild("password").getText());
+		//CarParts
+		try {
+			decoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(m_dbCarPartsLocation)));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
+			m_carParts = (ArrayList<CarPart>)decoder.readObject();
+		} catch (NullPointerException e) {
+			
 		}
 		
-		Iterator i4 = services.iterator();
-		while (i4.hasNext()) {
-			Element tmp = (Element)i4.next();
-			Service s = new Service(tmp.getChild("name").getText(),
-									Integer.parseInt(tmp.getChild("price").getText()));
-			addService(s);
+		//Users
+		try {
+			decoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(m_dbUsersLocation)));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
+			m_users = (ArrayList<User>)decoder.readObject();
+		} catch (NullPointerException e) {
+			
 		}
 	}
 	
@@ -126,6 +145,7 @@ public class GarageManager {
 		} else {
 			m_carParts.add(c);
 		}
+		this.saveCarParts();
 		return true;
 	}
 	
@@ -142,6 +162,7 @@ public class GarageManager {
 	@WebMethod
 	public boolean addVehicle(Vehicle v) {
 		m_vehicles.add(v);
+		saveVehicles();
 		return true;
 	}
 	
@@ -162,14 +183,29 @@ public class GarageManager {
 	}
 	
 	@WebMethod
-	public boolean register(String username, String password) {
+	public boolean register(String username, String password, int grade) {
 		for (User u : m_users) {
 			if (u.connect(username, password)) {
 				return false;
 			}
 		}
-		User u = new User(username, password);
-		m_users.add(u);
+		switch (grade) {
+			case 1 : {
+				Administrator a = new Administrator(username,password);
+				m_users.add(a);
+				break;
+			}
+			case 2 : {
+				Customer c  = new Customer(username,password);
+				m_users.add(c);
+				break;
+			}
+			case 3 : {
+				Provider p = new Provider(username, password);
+				break;
+			}
+		}
+		saveUsers();
 		return true;
 	}
 	
@@ -177,6 +213,8 @@ public class GarageManager {
 	public boolean sellVehicle(Vehicle v) {
 		if (m_vehicles.contains(v)) {
 			m_vehicles.remove(v);
+			saveVehicles();
+			return true;
 		}
 		return false;
 	}
@@ -185,6 +223,7 @@ public class GarageManager {
 	public boolean sellCarPart(CarPart c) {
 		if (m_carParts.contains(c)) {
 			c.removeOne();
+			saveCarParts();
 			return true;
 		}
 		return false;
@@ -193,7 +232,24 @@ public class GarageManager {
 	@WebMethod
 	public boolean addService(Service s) {
 		m_services.add(s);
+		saveServices();
 		return true;
+	}
+	
+	@WebMethod
+	public ArrayList<Vehicle> getVehicles() {
+		return m_vehicles;
+	}
+	
+	public ArrayList<CarPart> getCarParts() {
+		return m_carParts;
+	}
+	
+	public ArrayList<Service> getServices() {
+		return m_services;
+	}
+	public ArrayList<User> getUsers() {
+		return m_users;
 	}
 	
 	/*public boolean addService(String name, int price) {

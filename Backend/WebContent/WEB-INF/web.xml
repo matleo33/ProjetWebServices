@@ -8,6 +8,7 @@
     <servlet-name>Garage</servlet-name>
     <url-pattern>/home</url-pattern>
     <url-pattern>/accessStock</url-pattern>
+    <url-pattern>/vehicleManaging</url-pattern>
   </servlet-mapping>
   <servlet>
     <display-name>Apache-Axis Servlet</display-name>
