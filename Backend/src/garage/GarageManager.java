@@ -144,15 +144,6 @@ public class GarageManager {
 		return true;
 	}
 	
-	/*@WebMethod
-	public void addCarPart(String name, Vehicle v, int quantity, int price) {
-		CarPart c = new CarPart(name, v, quantity, price);
-		if (m_carParts.contains(c)) {
-			m_carParts.get(m_carParts.indexOf(c)).addOne();
-		} else {
-			m_carParts.add(c);
-		}
-	}*/
 	
 	@WebMethod
 	public boolean addVehicle(VehicleOnSale v) {
@@ -161,11 +152,6 @@ public class GarageManager {
 		return true;
 	}
 	
-	/*@WebMethod
-	public void addVehicle(String brand, String model, int price) {
-		Vehicle v = new Vehicle(brand, model, price);
-		m_vehicle.add(v);
-	}*/
 	
 	@WebMethod
 	public boolean connect(String username, String password) {
@@ -237,20 +223,18 @@ public class GarageManager {
 		return m_vehicles;
 	}
 	
+	@WebMethod
 	public ArrayList<CarPart> getCarParts() {
 		return m_carParts;
 	}
 	
+	@WebMethod
 	public ArrayList<Service> getServices() {
 		return m_services;
 	}
+	
+	@WebMethod
 	public ArrayList<User> getUsers() {
 		return m_users;
 	}
-	
-	/*public boolean addService(String name, int price) {
-		Service s = new Service(name, price);
-		m_services.add(s);
-		return true;
-	}*/
 }

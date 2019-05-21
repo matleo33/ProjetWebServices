@@ -15,7 +15,7 @@
 	<%@ include file="menu.jsp" %>
 	<h1>Welcome to the stock managing page</h1>
 	<c:forEach var="carPart" items="${carPartList}">
-		<div style="margin-top:10px">
+		<div class="col-sm-3" style="margin-top:10px">
 			Name : <c:out value="${carPart.getName()}"/><br/>
 			Price : <c:out value="${carPart.getPrice()}"/><br/>
 			Quantity : <c:out value="${carPart.getQuantity()}"/><br/>
