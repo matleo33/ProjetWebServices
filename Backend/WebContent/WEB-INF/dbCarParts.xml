@@ -47,5 +47,28 @@
     </void>
    </object>
   </void>
+  <void method="add">
+   <object class="garage.CarPart">
+    <void property="name">
+     <string>Wheel</string>
+    </void>
+    <void property="price">
+     <int>4</int>
+    </void>
+    <void property="quantity">
+     <int>300</int>
+    </void>
+    <void property="vehicle">
+     <object class="garage.Vehicle">
+      <void property="brand">
+       <string>Lamborghini</string>
+      </void>
+      <void property="model">
+       <string>Aventador</string>
+      </void>
+     </object>
+    </void>
+   </object>
+  </void>
  </object>
 </java>

@@ -206,9 +206,7 @@ public class GarageManager {
 	}
 	
 	@WebMethod
-	public boolean sellVehicle(Vehicle v) {
-		System.out.println("SOLD");
-		System.out.println(v);
+	public boolean sellVehicle(VehicleOnSale v) {
 		if (m_vehicles.contains(v)) {
 			m_vehicles.remove(v);
 			saveVehicles();

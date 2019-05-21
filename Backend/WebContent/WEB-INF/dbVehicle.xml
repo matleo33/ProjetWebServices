@@ -1,21 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <java version="11.0.3" class="java.beans.XMLDecoder">
- <object class="java.util.ArrayList">
-  <void method="add">
-   <object class="garage.VehicleOnSale">
-    <void property="brand">
-     <string>Lamborghini</string>
-    </void>
-    <void property="kilometers">
-     <int>5</int>
-    </void>
-    <void property="model">
-     <string>Aventador</string>
-    </void>
-    <void property="price">
-     <int>10000000</int>
-    </void>
-   </object>
-  </void>
- </object>
+ <object class="java.util.ArrayList"/>
 </java>

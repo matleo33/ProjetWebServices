@@ -15,11 +15,12 @@
 	<h1>Welcome to the vehicle managing page</h1>
 	<c:forEach var="vehicle" items="${vehicleList}">
 		<form method="post" style="margin-top:10px">
+			<input hidden="true" name="vehicle" value='<c:out value="${vehicle.getBrand()}" />/<c:out value="${vehicle.getModel()}" />/<c:out value="${vehicle.getKilometers()}"/>/<c:out value="${vehicle.getPrice()}"/>'/>
 			Brand : <c:out value="${vehicle.getBrand()}"/><br/>
 			Model : <c:out value="${vehicle.getModel()}"/><br/>
 			Kilometers : <c:out value="${vehicle.getKilometers()}"/><br/>
 			Price : <c:out value="${vehicle.getPrice()}"/> €<br/>
-			<input type="submit" onclick="" value="Sell Vehicle" />
+			<input type="submit" value="Sell Vehicle" />
 		</form>
 	</c:forEach>
 	

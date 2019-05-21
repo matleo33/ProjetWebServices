@@ -28,12 +28,12 @@
 		<label>Name</label>
 		<input type="text" name="name"/>
 		<label>Price</label>
-		<input type="text" name="price"/>
+		<input type="number" name="price"/>
 		<label>Quantity</label>
 		<input type="number" min="0" name="quantity"/>
-		<select>
+		<select name="model">
 		<c:forEach var="vehicle" items="${vehicleList}">
-			<option value="<c:out value="${vehicle.getBrand()}"/><c:out value="${vehicle.getModel()}" />">
+			<option value="<c:out value="${vehicle.getBrand()}"/>&<c:out value="${vehicle.getModel()}" />">
 				<c:out value="${vehicle.getBrand()}"/>,<c:out value="${vehicle.getModel()}" />
 			</option>
 		</c:forEach>
