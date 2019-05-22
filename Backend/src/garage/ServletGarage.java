@@ -88,8 +88,8 @@ public class ServletGarage extends HttpServlet {
 					Vehicle v = new Vehicle(brand,model);
 					CarPart c = new CarPart(request.getParameter("name"),
 							v,
-							Integer.parseInt(request.getParameter("price")),
-							Integer.parseInt(request.getParameter("quantity")));
+							Integer.parseInt(request.getParameter("quantity")),
+							Integer.parseInt(request.getParameter("price")));
 					m_gm.addCarPart(c);
 			}
 		}

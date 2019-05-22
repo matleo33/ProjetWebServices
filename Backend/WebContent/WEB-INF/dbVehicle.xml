@@ -4,16 +4,16 @@
   <void method="add">
    <object class="garage.VehicleOnSale">
     <void property="brand">
-     <string>Toyota</string>
+     <string>Rolls  Royce</string>
     </void>
     <void property="kilometers">
-     <int>15000</int>
+     <int>2000</int>
     </void>
     <void property="model">
-     <string>Yaris</string>
+     <string>Phantom</string>
     </void>
     <void property="price">
-     <int>300</int>
+     <int>200000</int>
     </void>
    </object>
   </void>
